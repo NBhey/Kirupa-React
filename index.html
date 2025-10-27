@@ -17,34 +17,55 @@
   </head>
   <body>
     <div id="container"></div>
+
     <script type="text/babel">
       var destination = document.querySelector("#container");
 
-      class Letter extends React.Component {
+      class Square extends React.Component {
         render() {
-
-          var letterSpace = {
-            padding: "10px",
-            margin: "10px",
-            backgroundColor: this.props.bgcolor || "#ffde00",
-            color: "#333",
-            display: "inline-block",
-            fontFamily: "monospace",
-            fontSize: "32px",
-            textAlign: "center",
+          var squareStyle = {
+            height: 150,
+            backgroundColor: this.props.color,
           };
+          return <div style={squareStyle}></div>;
+        }
+      }
 
-          return <div style={letterSpace}>{this.props.children}</div>;
+      class Label extends React.Component {
+        render() {
+          var labelStyle = {
+            fontFamily: "sans-serif",
+            fontWeight: "bold",
+            padding: 13,
+            margin: 0,
+          };
+          return <p style={labelStyle}>{this.props.color}</p>;
+        }
+      }
+
+      class Card extends React.Component {
+        render() {
+          var cardStyle = {
+            height: 200,
+            width: 150,
+            padding: 0,
+            backgroundColor: "#FFF",
+            boxShadow: "0px 0px 5px #666",
+          };
+          
+          return (
+            <div style={cardStyle}>
+              <Square color={this.props.color} />
+              <Label color={this.props.color} />
+            </div>
+          );
         }
       }
 
       ReactDOM.render(
         <React.Fragment>
-          <Letter bgcolor='#58B3FF'> А </Letter>
-          <Letter bgcolor='#FF605F'> Е </Letter>
-          <Letter bgcolor='#FFD52E'> И </Letter>
-          <Letter bgcolor='#49DD8E'> О </Letter>
-          <Letter bgcolor='#AE99FF'> У </Letter>
+          <Card color="#FF6663" />
+          <Card color="#FFA737" />
         </React.Fragment>,
         destination
       );
