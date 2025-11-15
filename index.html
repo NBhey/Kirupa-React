@@ -19,6 +19,8 @@
     <div id="container"></div>
 
     <script type="text/babel">
+      const destination = document.querySelector("#container");
+
       class Counter extends React.Component {
         render() {
           var textStyle = {
@@ -45,9 +47,10 @@
       class CounterParent extends React.Component {
         constructor(props) {
           super(props);
+          console.log("constructor: Состояние по умолчанию");
 
           this.state = {
-            count: 0,
+            count: 1,
           };
 
           this.increase = this.increase.bind(this);
@@ -61,6 +64,55 @@
             : this.setState({
                 count: this.state.count + 1,
               });
+        }
+
+        componentWillUpdate(newProps, newState) {
+          console.log(
+            "componentWillUpdate: компонент будет обновлен",
+            this.state.count,
+            newState
+          );
+        }
+
+        componentDidUpdate(currentProps, currentState) {
+          console.log(
+            "componentDidUpdate: компонент обновлен",
+            this.state.count,
+            currentState
+          );
+        }
+
+        componentWillMount() {
+          console.log(
+            "componentWillMount: компонент будет смонтирован",
+            this.state.count
+          );
+        }
+
+        componentDidMount() {
+          console.log(
+            "componentWillMount: компонент смонтирован",
+            this.state.count
+          );
+        }
+
+        componentWillUnmount() {
+          console.log(
+            "componentWillUnmount: компонент будет размонитрован(удален из Dom)", destination
+          );
+        }
+
+        shouldComponentUpdate(newProps, newState) {
+          console.log("shouldComponentUpdate: следует ли обновлять компонент?",newState);
+          if (newState.count === 3) {
+            console.log("shouldComponentUpdate: компонент будет удален");
+            ReactDOM.unmountComponentAtNode(destination);
+            console.log("shouldComponentUpdate: компонент  удален",destination );
+            return false;
+          } else {
+             console.log("shouldComponentUpdate: компонент будет изменен");
+            return true
+          }
         }
 
         render() {
@@ -95,7 +147,7 @@
         <React.Fragment>
           <CounterParent />
         </React.Fragment>,
-        document.querySelector("#container")
+        destination
       );
     </script>
   </body>
