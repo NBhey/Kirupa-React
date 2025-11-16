@@ -13,131 +13,102 @@
         padding: 50px;
         background-color: #fff;
       }
+
+      .colorSquare {
+        box-shadow: 0px 0px 25px 0px #333;
+        width: 242px;
+        height: 242px;
+        margin-bottom: 15px;
+      }
+
+      .colorArea input {
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #ccc;
+      }
+
+      .colorArea button {
+        padding: 10px;
+        font-size: 16px;
+        margin: 10px;
+        background-color: #666;
+        color: #fff;
+        border: 2px solid #666;
+      }
+
+      .colorArea button:hover {
+        background-color: #111;
+        border-color: #111;
+        cursor: pointer;
+      }
+
+      #colorHeading {
+        padding: 0;
+        margin: 50px;
+        margin-bottom: -20px;
+        font-family: sans-serif;
+      }
     </style>
   </head>
   <body>
+    <h1 id="colorHeading">Палитра</h1>
     <div id="container"></div>
 
     <script type="text/babel">
       const destination = document.querySelector("#container");
+      var heading = document.querySelector("#colorHeading");
 
-      class Counter extends React.Component {
+      class ColorLabel extends React.Component {
         render() {
-          var textStyle = {
-            fontSize: 72,
-            fontFamily: "sans-serif",
-            color: "#333",
-            fontWeight: "bold",
-          };
-
-          return <div style={textStyle}> {this.props.display}</div>;
+          return ReactDOM.createPortal(": " + this.props.color, heading);
         }
       }
-
-      class Button extends React.Component {
-        render() {
-          return (
-            <button style={this.props.style} onClick={this.props.plus}>
-              +
-            </button>
-          );
-        }
-      }
-
-      class CounterParent extends React.Component {
+      class Colorizer extends React.Component {
         constructor(props) {
           super(props);
-          console.log("constructor: Состояние по умолчанию");
 
           this.state = {
-            count: 1,
+            color: "",
+            bgColor: "white",
           };
 
-          this.increase = this.increase.bind(this);
+          this.colorValue = this.colorValue.bind(this);
+          this.setNewColor = this.setNewColor.bind(this);
         }
 
-        increase(e) {
-          e.shiftKey
-            ? this.setState({
-                count: this.state.count + 10,
-              })
-            : this.setState({
-                count: this.state.count + 1,
-              });
+        colorValue(e) {
+          this.setState({
+            color: e.target.value,
+          });
         }
 
-        componentWillUpdate(newProps, newState) {
-          console.log(
-            "componentWillUpdate: компонент будет обновлен",
-            this.state.count,
-            newState
-          );
-        }
+        setNewColor(e) {
+          this.setState({
+            bgColor: this.state.color,
+          });
 
-        componentDidUpdate(currentProps, currentState) {
-          console.log(
-            "componentDidUpdate: компонент обновлен",
-            this.state.count,
-            currentState
-          );
-        }
-
-        componentWillMount() {
-          console.log(
-            "componentWillMount: компонент будет смонтирован",
-            this.state.count
-          );
-        }
-
-        componentDidMount() {
-          console.log(
-            "componentWillMount: компонент смонтирован",
-            this.state.count
-          );
-        }
-
-        componentWillUnmount() {
-          console.log(
-            "componentWillUnmount: компонент будет размонитрован(удален из Dom)", destination
-          );
-        }
-
-        shouldComponentUpdate(newProps, newState) {
-          console.log("shouldComponentUpdate: следует ли обновлять компонент?",newState);
-          if (newState.count === 3) {
-            console.log("shouldComponentUpdate: компонент будет удален");
-            ReactDOM.unmountComponentAtNode(destination);
-            console.log("shouldComponentUpdate: компонент  удален",destination );
-            return false;
-          } else {
-             console.log("shouldComponentUpdate: компонент будет изменен");
-            return true
-          }
+          this._input.focus();
+          this._input.value = "";
+          e.preventDefault();
         }
 
         render() {
-          var backgroundStyle = {
-            padding: 50,
-            backgroundColor: "#FFC53A",
-            width: 250,
-            height: 100,
-            borderRadius: 10,
-            textAlign: "center",
-          };
-          var buttonStyle = {
-            fontSize: "1em",
-            width: 30,
-            height: 30,
-            fontFamily: "sans-serif",
-            color: "#333",
-            fontWeight: "bold",
-            lineHeight: "3px",
+          var squaredStyle = {
+            backgroundColor: this.state.bgColor,
           };
 
           return (
-            <div style={backgroundStyle}>
-              <Counter display={this.state.count} />
-              <Button style={buttonStyle} plus={this.increase} />
+            <div className="colorArea">
+              <div style={squaredStyle} className="colorSquare"></div>
+              <form onSubmit={this.setNewColor}>
+                <input
+                  onChange={this.colorValue}
+                  ref={(el) => (this._input = el)}
+                  placeholder="значение цвета"
+                />
+                <button type="submit"> ok </button>
+              </form>
+              <ColorLabel color={this.state.bgColor} />
             </div>
           );
         }
@@ -145,7 +116,7 @@
 
       ReactDOM.render(
         <React.Fragment>
-          <CounterParent />
+          <Colorizer />
         </React.Fragment>,
         destination
       );
