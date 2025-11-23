@@ -1,9 +1,8 @@
 name: Deploy to GithubPages
 
 on: 
-  push:
-    branches:
-      - master
+  branches:
+    - master
 permissions:
   contents: write
 jobs:
