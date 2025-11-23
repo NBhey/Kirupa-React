@@ -19,10 +19,10 @@ jobs:
 
       - name: Build prod
         run: |
-          npm run build:prod
+          npm run build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           BRANCH: gh-pages
-          FOLDER: prod # The folder the action should deploy.
+          FOLDER: build # The folder the action should deploy.
