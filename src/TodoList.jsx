@@ -1,5 +1,6 @@
 import { Component } from "react";
-
+import  TodoItems  from "./TodoItems";
+import './TodoList.css'
 class TodoList extends Component {
   constructor(props) {
     super(props);
@@ -21,22 +22,26 @@ class TodoList extends Component {
       });
 
       this.setState({
-        items: itemArray
-      })
+        items: itemArray,
+      });
 
-      this._inputElement.value = '';
+      this._inputElement.value = "";
     }
 
-    console.log(itemArray)
+    console.log(itemArray);
 
-    e.preventDefault()
+    e.preventDefault();
   }
 
   render() {
     return (
       <div className="todoListMain">
         <div className="header">
-          <form onSubmit={(e)=>{this.addItem(e)}}>
+          <form
+            onSubmit={(e) => {
+              this.addItem(e);
+            }}
+          >
             <input
               ref={(a) => {
                 this._inputElement = a;
@@ -46,6 +51,7 @@ class TodoList extends Component {
             <button type="submit"> ok </button>
           </form>
         </div>
+        <TodoItems entries={this.state.items} />
       </div>
     );
   }
