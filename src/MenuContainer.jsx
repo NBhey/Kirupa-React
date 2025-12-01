@@ -1,6 +1,6 @@
 import { Component } from "react";
 import MenuButton from "./MenuButton";
-
+import Menu from "./Menu";
 class MenuContainer extends Component {
   constructor(props) {
     super(props);
@@ -30,6 +30,7 @@ class MenuContainer extends Component {
     return (
       <>
       <MenuButton handleMouseDown={this.handleMouseDown}/>
+      <Menu handleMouseDown={this.handleMouseDown} menuVisibility={this.state.isVisible} />
         <div>
           <p>Найдешь пункт, который здесь лишний?</p>
           <ul>
