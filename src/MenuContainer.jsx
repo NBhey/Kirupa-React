@@ -1,4 +1,5 @@
 import { Component } from "react";
+import MenuButton from "./MenuButton";
 
 class MenuContainer extends Component {
   constructor(props) {
@@ -8,7 +9,15 @@ class MenuContainer extends Component {
         isVisible: false
     }
 
+    this.handleMouseDown = this.handleMouseDown.bind(this)
     this.toogleMenu = this.toogleMenu.bind(this)
+  }
+
+  handleMouseDown(e){
+    this.toogleMenu();
+
+    console.log('clicked')
+    e.stopPropagation();
   }
 
   toogleMenu(){
@@ -20,6 +29,7 @@ class MenuContainer extends Component {
   render() {
     return (
       <>
+      <MenuButton handleMouseDown={this.handleMouseDown}/>
         <div>
           <p>Найдешь пункт, который здесь лишний?</p>
           <ul>
