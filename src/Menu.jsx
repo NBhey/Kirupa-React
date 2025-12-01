@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Component } from "react";
 import "./Menu.css";
+
 class Menu extends Component {
   render() {
     var visibilty = "hide";
