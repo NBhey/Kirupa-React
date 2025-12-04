@@ -5,32 +5,37 @@ class MenuContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
-        isVisible: false
-    }
+    this.state = {
+      isVisible: false,
+    };
 
-    this.handleMouseDown = this.handleMouseDown.bind(this)
-    this.toogleMenu = this.toogleMenu.bind(this)
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.toogleMenu = this.toogleMenu.bind(this);
   }
 
-  handleMouseDown(e){
+  handleMouseDown(e) {
     this.toogleMenu();
 
-    console.log('clicked')
+    console.log("clicked");
     e.stopPropagation();
   }
 
-  toogleMenu(){
+  toogleMenu() {
     this.setState({
-        isVisible: !this.state.isVisible
-    })
-  } 
+      isVisible: !this.state.isVisible,
+    });
+  }
 
   render() {
+    console.log("Rendering: MenuContainer");
+
     return (
       <>
-      <MenuButton handleMouseDown={this.handleMouseDown}/>
-      <Menu handleMouseDown={this.handleMouseDown} menuVisibility={this.state.isVisible} />
+        <MenuButton handleMouseDown={this.handleMouseDown} />
+        <Menu
+          handleMouseDown={this.handleMouseDown}
+          menuVisibility={this.state.isVisible}
+        />
         <div>
           <p>Найдешь пункт, который здесь лишний?</p>
           <ul>
