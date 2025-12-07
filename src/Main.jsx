@@ -3,7 +3,7 @@ import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import Stuff from "./Stuff";
 import Contact from "./Contact";
-
+import App from "./App";
 class Main extends Component {
   render() {
     return (
@@ -21,6 +21,9 @@ class Main extends Component {
             <li>
               <NavLink to="/contact">Контакты</NavLink>
             </li>
+            <li>
+              <NavLink to="/counter">Счетчик</NavLink>
+            </li>
           </ul>
 
           <div className="content">
@@ -28,6 +31,7 @@ class Main extends Component {
               <Route path="/" element={<Home />} />
               <Route path="/stuff" element={<Stuff />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/counter" element={<App />} />
             </Routes>
           </div>
         </>
